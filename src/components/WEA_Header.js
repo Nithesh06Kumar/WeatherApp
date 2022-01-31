@@ -1,7 +1,9 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-const Header = ({
+import {useWindowDimensions} from 'react-native';
+
+const WEA_Header = ({
   onPressLeftIcon,
   onPressRightIcon,
   leftIcon,
@@ -10,11 +12,14 @@ const Header = ({
   headerComponent = null,
   headerText = null,
   backGroundColor = null,
+  headerStyles = {},
+  iconStyles = {},
 }) => {
-  console.log('Header');
+  const {height, width} = useWindowDimensions();
+  let portrait = height > width;
 
-  return (
-    <View style={styles.container(backGroundColor)}>
+  const renderHeaderLeftDetails = () => {
+    return (
       <View style={styles.leftPart}>
         <TouchableOpacity onPress={onPressLeftIcon}>
           <Image source={leftIcon} style={styles.menuIcon} />
@@ -26,24 +31,42 @@ const Header = ({
           <Text style={styles.headerText}>{headerText}</Text>
         )}
       </View>
+    );
+  };
 
+  const renderHeaderRightIcon = () => {
+    return (
       <View style={styles.rightPart}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPressRightIcon}>
           {rightImage ? (
             <Image source={rightImage} style={styles.searchImage} />
           ) : (
-            <Icon name={rightIcon} style={styles.searchIcon} />
+            <Icon name={rightIcon} style={[styles.searchIcon, iconStyles]} />
           )}
         </TouchableOpacity>
       </View>
+    );
+  };
+
+  return (
+    <View
+      style={[
+        headerStyles,
+        portrait
+          ? styles.container(backGroundColor)
+          : styles.landscapeContainer(backGroundColor),
+      ]}>
+      {renderHeaderLeftDetails()}
+      {renderHeaderRightIcon()}
     </View>
   );
 };
 
-export default Header;
+export default WEA_Header;
 
 const styles = StyleSheet.create({
   container: backGroundColor => ({
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -80,4 +103,16 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textShadowColor: 'rgba(0,0,0,0.15)',
   },
+  rightPart: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  landscapeContainer: backGroundColor => ({
+    flex: 1.8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: backGroundColor ? backGroundColor : 'transparent',
+  }),
 });

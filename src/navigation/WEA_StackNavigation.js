@@ -1,9 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Splash from '../screens/Splash';
-import DrawerNavigation from './DrawerNavigation';
-
+import Splash from '../screens/WEA_SplashScreen';
+import DrawerNavigation from './WEA_DrawerNavigation';
+import Search from '../screens/WEA_SearchScreen';
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
@@ -18,6 +17,11 @@ const StackNavigation = () => {
       <Stack.Screen
         name="DrawerNavigation"
         component={DrawerNavigation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Search"
+        component={Search}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
