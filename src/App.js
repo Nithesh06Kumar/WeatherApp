@@ -7,8 +7,8 @@ LogBox.ignoreLogs([
 import {StyleSheet, Text, View, StatusBar} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import StackNavigation from './navigation/StackNavigation';
-import ContextProvider from './context/ContextProvider';
+import StackNavigation from './navigation/WEA_StackNavigation';
+import ContextProvider from './context/WEA_ContextProvider';
 
 const App = () => {
   return (
